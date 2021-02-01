@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from "react";
 import Tile from "./tile";
 
-export default function Board(props: { row: number; col: number }) {
-  const [board, setBoard] = useState(() => {
-    let arr = Array.from({ length: props.row }, (v, i) =>
-      Array.from({ length: props.col }, (w, j) => i * props.col + j + 1)
-    );
-    arr[props.row - 1][props.col - 1] = 0;
-    return { arr, row: props.row - 1, col: props.col - 1 };
+const init = (row: number, col: number) => {
+  let arr = Array.from({ length: row }, (v, i) =>
+    Array.from({ length: col }, (w, j) => i * col + j + 1)
+  );
+  arr[row - 1][col - 1] = 0;
+  return arr;
+};
+
+export default function Board(props: { size: { row: number; col: number } }) {
+  const [board, setBoard] = useState({
+    arr: init(props.size.row, props.size.col),
+    row: props.size.row - 1,
+    col: props.size.col - 1,
   });
+  
+  useEffect(() => {
+    setBoard({
+      arr: init(props.size.row, props.size.col),
+      row: props.size.row - 1,
+      col: props.size.col - 1,
+    });
+  }, [props.size]);
 
   const MoveLeft = (value: number) => {
     console.log(board.arr);
-    if (value < 1 || board.col === props.col - 1) {
+    if (value < 1 || board.col === props.size.col - 1) {
       return;
     }
     let res = board.arr.map((x) => [...x]);
@@ -41,7 +55,7 @@ export default function Board(props: { row: number; col: number }) {
 
   const MoveUp = (value: number) => {
     console.log(board.arr);
-    if (value < 1 || board.row === props.row - 1) {
+    if (value < 1 || board.row === props.size.row - 1) {
       return;
     }
     let res = board.arr.map((x) => [...x]);
@@ -69,13 +83,13 @@ export default function Board(props: { row: number; col: number }) {
 
   // EVENT
   const OnTilePressed = (r: number, c: number) => {
-    if (r == board.row) {
+    if (r === board.row) {
       if (c > board.col) {
         MoveLeft(c - board.col);
       } else {
         MoveRight(board.col - c);
       }
-    } else if (c == board.col) {
+    } else if (c === board.col) {
       if (r > board.row) {
         MoveUp(r - board.row);
       } else {
@@ -84,31 +98,10 @@ export default function Board(props: { row: number; col: number }) {
     }
   };
 
-  // KEYBOARD INPUT
-//   const OnKeyDown = (ev: KeyboardEvent) => {
-//     console.log(ev.key);
-
-//     if (ev.key === "ArrowLeft") {
-//       MoveLeft(1);
-//     } else if (ev.key === "ArrowRight") {
-//       MoveRight(1);
-//     }
-//   };
-//   useEffect(() => {
-//     document.addEventListener("keydown", OnKeyDown);
-//     return () => {
-//       document.removeEventListener("keydown", OnKeyDown);
-//     };
-//   }, []);
-
-//   useEffect(() => {
-//     console.log(board.arr);
-//   });
-
   return (
     <div
       className="board"
-      style={{ gridTemplateColumns: `repeat(${props.col}, auto)` }}
+      style={{ gridTemplateColumns: `repeat(${props.size.col}, auto)` }}
       tabIndex={0}
     >
       {board.arr.map((element, i) =>

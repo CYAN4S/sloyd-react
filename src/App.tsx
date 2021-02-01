@@ -1,17 +1,12 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-
+import Game from "./components/game";
 import Header from "./components/header";
-import Board from "./components/board"
+import Board from "./components/board";
 
 function App() {
-  return (
-    <>
-      <Header />
-      <Board row={3} col={3} />
-    </>
-  );
+  return <Game />;
 }
 
 export default App;

@@ -1,7 +1,11 @@
+* {
+  user-select: none;
+}
+
 header {
   width: 100wh;
   height: 60px;
-  background-color: #26BFB3;
+  background-color: #26bfb3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +13,7 @@ header {
 
 header > h1 {
   color: white;
-  font: 700 24px Montserrat;
+  font: 700 24px Inter;
   margin: 0;
 }
 
@@ -29,11 +33,76 @@ header > h1 {
   align-items: center;
 
   font: 700 32px Inter;
-  background-color: #26BFB3;
+  background-color: #26bfb3;
   color: white;
-  user-select: none;
 }
 
 .hole {
   visibility: hidden;
+}
+
+.tool {
+  display: flex;
+  justify-content: center;
+}
+
+.tool div {
+  width: 100px;
+  text-align: center;
+}
+
+.dialogue-fullscreen {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialogue {
+  margin: 160px auto;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  font: 400 24px Inter;
+}
+
+.dialogue-title {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  font: 400 28px Inter;
+}
+.dialogue-title span {
+  margin-left: 20px;
+}
+
+.dialogue-exit {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font: 400 36px Inter;
+}
+
+.dialogue-button {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialogue .resize-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
 }
