@@ -18,29 +18,6 @@ export default function ResizeDialogue(props: {
   const [row, setRow] = useState(props.row);
   const [col, setCol] = useState(props.col);
 
-  //   return (
-  //     <div className="dialogue">
-  //       <div className="dialogue-title"></div>
-  //       <div className="resize-grid">
-  //         <IncreaseButton ev={() => setRow(row + 1)} />
-  //         <IncreaseButton ev={() => setCol(col + 1)} />
-  //         <div>{row}</div>
-  //         <div>{col}</div>
-  //         <DecreaseButton ev={() => setRow(row - 1)} />
-  //         <DecreaseButton ev={() => setCol(col - 1)} />
-  //       </div>
-
-  // <div
-  //   onClick={() => {
-  //     props.onApply(row, col);
-  //     props.onExit();
-  //   }}
-  // >
-  //   APPLY
-  // </div>
-  //       <div onClick={() => props.onExit()}>EXIT</div>
-  //     </div>
-  //   );
   return (
     <Dialogue
       title="RESIZE"

@@ -9,5 +9,9 @@ export default function Tile(props: {
   let func = () => {
     props.ev(props.row, props.col);
   };
-  return <div onClick={func} className={"tile" + (props.num === 0 ? " hole" : "")}>{props.num}</div>;
+  return (
+    <div onClick={func} className={"tile" + (props.num === 0 ? " hole" : "")}>
+      {props.num}
+    </div>
+  );
 }

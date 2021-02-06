@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { reduceEachTrailingCommentRange } from "typescript";
 import Tile from "./tile";
 
 const init = (row: number, col: number) => {
@@ -15,7 +16,7 @@ export default function Board(props: { size: { row: number; col: number } }) {
     row: props.size.row - 1,
     col: props.size.col - 1,
   });
-  
+
   useEffect(() => {
     setBoard({
       arr: init(props.size.row, props.size.col),
@@ -25,75 +26,62 @@ export default function Board(props: { size: { row: number; col: number } }) {
   }, [props.size]);
 
   const MoveLeft = (value: number) => {
-    console.log(board.arr);
-    if (value < 1 || board.col === props.size.col - 1) {
-      return;
-    }
+    if (value < 1 || board.col === props.size.col - 1) return;
     let res = board.arr.map((x) => [...x]);
     for (let index = 0; index < value; index++) {
       res[board.row][board.col + index] = res[board.row][board.col + index + 1];
     }
     res[board.row][board.col + value] = 0;
 
-    setBoard({ arr: res, col: board.col + value, row: board.row });
+    return ({ arr: res, col: board.col + value, row: board.row });
   };
 
   const MoveRight = (value: number) => {
-    console.log(board.arr);
-    if (value < 1 || board.col === 0) {
-      return;
-    }
-
+    if (value < 1 || board.col === 0) return;
     let res = board.arr.map((x) => [...x]);
     for (let index = 0; index < value; index++) {
       res[board.row][board.col - index] = res[board.row][board.col - index - 1];
     }
     res[board.row][board.col - value] = 0;
 
-    setBoard({ arr: res, col: board.col - value, row: board.row });
+    return ({ arr: res, col: board.col - value, row: board.row });
   };
 
   const MoveUp = (value: number) => {
-    console.log(board.arr);
-    if (value < 1 || board.row === props.size.row - 1) {
-      return;
-    }
+    if (value < 1 || board.row === props.size.row - 1) return;
     let res = board.arr.map((x) => [...x]);
     for (let index = 0; index < value; index++) {
       res[board.row + index][board.col] = res[board.row + index + 1][board.col];
     }
     res[board.row + value][board.col] = 0;
 
-    setBoard({ arr: res, col: board.col, row: board.row + value });
+    return ({ arr: res, col: board.col, row: board.row + value });
   };
 
   const MoveDown = (value: number) => {
-    console.log(board.arr);
-    if (value < 1 || board.row === 0) {
-      return;
-    }
+    if (value < 1 || board.row === 0) return;
     let res = board.arr.map((x) => [...x]);
     for (let index = 0; index < value; index++) {
       res[board.row - index][board.col] = res[board.row - index - 1][board.col];
     }
     res[board.row - value][board.col] = 0;
 
-    setBoard({ arr: res, col: board.col, row: board.row - value });
+    return ({ arr: res, col: board.col, row: board.row - value });
   };
 
   // EVENT
   const OnTilePressed = (r: number, c: number) => {
     if (r === board.row) {
       if (c > board.col) {
-        MoveLeft(c - board.col);
+        setBoard(MoveLeft(c - board.col)!) ;
       } else {
-        MoveRight(board.col - c);
+        setBoard(MoveRight(board.col - c)!);
       }
     } else if (c === board.col) {
       if (r > board.row) {
-        MoveUp(r - board.row);
+        setBoard(MoveUp(r - board.row)!);
       } else {
-        MoveDown(board.row - r);
+        setBoard(MoveDown(board.row - r)!);
       }
     }
   };
